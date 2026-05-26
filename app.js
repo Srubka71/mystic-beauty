@@ -64,7 +64,7 @@ function createQuestionMailto(service, variant = null) {
   )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 }
 
-function createCheckoutMailto(cartItems) {
+function createReservationMailto(cartItems, formData = {}) {
   const subject = "Prośba o rezerwację — Mystic Beauty";
 
   const bodyLines = [
@@ -80,16 +80,19 @@ function createCheckoutMailto(cartItems) {
       item.categoryTitle ? `   Kategoria: ${item.categoryTitle}` : "",
       ""
     ]),
+    "Dane kontaktowe:",
+    formData.name ? `Imię i nazwisko: ${formData.name}` : "Imię i nazwisko:",
+    formData.phone ? `Telefon: ${formData.phone}` : "Telefon:",
+    formData.email ? `E-mail: ${formData.email}` : "E-mail:",
+    "",
     "Preferowany termin:",
+    formData.date ? `Dzień: ${formData.date}` : "Dzień:",
+    formData.time ? `Godzina / zakres godzin: ${formData.time}` : "Godzina / zakres godzin:",
     "",
-    "Imię i nazwisko:",
+    "Wiadomość dodatkowa:",
+    formData.message ? formData.message : "",
     "",
-    "Telefon:",
-    "",
-    "Dodatkowe pytania:",
-    "",
-    "",
-    "Akceptuję, że ostateczny termin oraz zasady rezerwacji zostaną potwierdzone przez salon.",
+    "Akceptuję, że wysłanie formularza jest prośbą o rezerwację, a ostateczny termin oraz zasady rezerwacji zostaną potwierdzone przez salon.",
     "",
     "Pozdrawiam"
   ].filter(Boolean);
@@ -899,7 +902,7 @@ function initOfferPage() {
       <button class="checkout-modal-close" type="button" aria-label="Zamknij finalizację">×</button>
 
       <div class="checkout-header">
-        <p class="section-label">Twój koszyk</p>
+        <p class="section-label">Prośba o rezerwację</p>
         <h3>Wybrane zabiegi</h3>
         <span>${serviceCart.length} ${serviceCart.length === 1 ? "pozycja" : "pozycje"} do omówienia</span>
       </div>
@@ -926,25 +929,45 @@ function initOfferPage() {
           .join("")}
       </div>
 
-      <div class="checkout-form-preview">
+      <form class="checkout-form-preview" id="reservationForm">
         <label>
-          <span>Imię i nazwisko</span>
-          <input type="text" placeholder="Uzupełnimy później przez formularz" disabled>
+          <span>Imię i nazwisko *</span>
+          <input id="reservationName" name="name" type="text" placeholder="Np. Anna Kowalska" autocomplete="name" required>
         </label>
 
         <label>
-          <span>Telefon / e-mail</span>
-          <input type="text" placeholder="Uzupełnimy później przez Formspree" disabled>
+          <span>Telefon *</span>
+          <input id="reservationPhone" name="phone" type="tel" placeholder="Np. 500 000 000" autocomplete="tel" required>
+        </label>
+
+        <label>
+          <span>E-mail *</span>
+          <input id="reservationEmail" name="email" type="email" placeholder="Np. anna@email.pl" autocomplete="email" required>
+        </label>
+
+        <label>
+          <span>Preferowany dzień</span>
+          <input id="reservationDate" name="date" type="date">
+        </label>
+
+        <label>
+          <span>Preferowana godzina / zakres godzin</span>
+          <input id="reservationTime" name="time" type="text" placeholder="Np. wtorek po 16:00 albo sobota rano">
+        </label>
+
+        <label>
+          <span>Wiadomość dodatkowa</span>
+          <textarea id="reservationMessage" name="message" rows="4" placeholder="Napisz, jeśli masz pytanie, przeciwwskazania albo preferencje dotyczące terminu."></textarea>
         </label>
 
         <label class="checkout-terms">
           <input id="checkoutTerms" type="checkbox">
           <span>
             Akceptuję przyszły <a href="#regulamin">regulamin rezerwacji</a> oraz rozumiem,
-            że termin zostanie potwierdzony przez salon.
+            że wysłanie formularza jest prośbą o rezerwację, a termin zostanie potwierdzony przez salon.
           </span>
         </label>
-      </div>
+      </form>
 
       <div class="checkout-actions">
         <a id="checkoutMailButton" class="btn btn-primary checkout-submit is-disabled" href="#" aria-disabled="true">
@@ -960,13 +983,75 @@ function initOfferPage() {
         </button>
       </div>
 
-      <p class="checkout-note">
-        To jest baza pod późniejsze Formspree, płatność zaliczki oraz integrację z kalendarzem.
+      <p class="checkout-note" id="checkoutNote">
+        To jest etap testowy. Formularz przygotowuje wiadomość e-mail z wybranymi zabiegami i danymi kontaktowymi.
+        W kolejnym etapie podepniemy Formspree.
       </p>
     `;
 
     checkoutBackdrop.appendChild(checkoutModal);
     document.body.appendChild(checkoutBackdrop);
+
+    const reservationForm = checkoutModal.querySelector("#reservationForm");
+    const nameInput = checkoutModal.querySelector("#reservationName");
+    const phoneInput = checkoutModal.querySelector("#reservationPhone");
+    const emailInput = checkoutModal.querySelector("#reservationEmail");
+    const dateInput = checkoutModal.querySelector("#reservationDate");
+    const timeInput = checkoutModal.querySelector("#reservationTime");
+    const messageInput = checkoutModal.querySelector("#reservationMessage");
+    const termsCheckbox = checkoutModal.querySelector("#checkoutTerms");
+    const checkoutMailButton = checkoutModal.querySelector("#checkoutMailButton");
+    const checkoutNote = checkoutModal.querySelector("#checkoutNote");
+
+    function getReservationFormData() {
+      return {
+        name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        email: emailInput.value.trim(),
+        date: dateInput.value,
+        time: timeInput.value.trim(),
+        message: messageInput.value.trim()
+      };
+    }
+
+    function validateReservationForm() {
+      const formData = getReservationFormData();
+
+      const isValid =
+        formData.name.length >= 2 &&
+        formData.phone.length >= 6 &&
+        emailInput.validity.valid &&
+        formData.email.length >= 5 &&
+        termsCheckbox.checked;
+
+      if (isValid) {
+        checkoutMailButton.classList.remove("is-disabled");
+        checkoutMailButton.removeAttribute("aria-disabled");
+        checkoutMailButton.href = createReservationMailto(serviceCart, formData);
+        checkoutNote.textContent =
+          "Formularz jest gotowy. Kliknięcie przycisku przygotuje wiadomość e-mail z prośbą o rezerwację.";
+      } else {
+        checkoutMailButton.classList.add("is-disabled");
+        checkoutMailButton.setAttribute("aria-disabled", "true");
+        checkoutMailButton.href = "#";
+        checkoutNote.textContent =
+          "Uzupełnij imię i nazwisko, telefon, e-mail oraz zaakceptuj regulamin, żeby przygotować prośbę o rezerwację.";
+      }
+    }
+
+    reservationForm.addEventListener("input", validateReservationForm);
+    reservationForm.addEventListener("change", validateReservationForm);
+
+    checkoutMailButton.addEventListener("click", (event) => {
+      validateReservationForm();
+
+      if (checkoutMailButton.classList.contains("is-disabled")) {
+        event.preventDefault();
+
+        checkoutNote.textContent =
+          "Brakuje wymaganych danych. Uzupełnij imię i nazwisko, telefon, e-mail oraz zaznacz akceptację regulaminu.";
+      }
+    });
 
     function closeCheckoutModal() {
       checkoutBackdrop.classList.remove("is-open");
@@ -1014,27 +1099,6 @@ function initOfferPage() {
       closeCheckoutModal();
     });
 
-    const termsCheckbox = checkoutModal.querySelector("#checkoutTerms");
-    const checkoutMailButton = checkoutModal.querySelector("#checkoutMailButton");
-
-    termsCheckbox.addEventListener("change", () => {
-      if (termsCheckbox.checked) {
-        checkoutMailButton.classList.remove("is-disabled");
-        checkoutMailButton.removeAttribute("aria-disabled");
-        checkoutMailButton.href = createCheckoutMailto(serviceCart);
-      } else {
-        checkoutMailButton.classList.add("is-disabled");
-        checkoutMailButton.setAttribute("aria-disabled", "true");
-        checkoutMailButton.href = "#";
-      }
-    });
-
-    checkoutMailButton.addEventListener("click", (event) => {
-      if (!termsCheckbox.checked) {
-        event.preventDefault();
-      }
-    });
-
     window.requestAnimationFrame(() => {
       checkoutBackdrop.classList.add("is-open");
     });
@@ -1048,6 +1112,8 @@ function initOfferPage() {
         closeCheckoutModal();
       }
     });
+
+    validateReservationForm();
   }
 
   brandOwner.textContent = MYSTIC_CONFIG.brand.owner;
