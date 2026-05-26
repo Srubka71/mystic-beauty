@@ -87,7 +87,7 @@ function createReservationMailto(cartItems, formData = {}) {
     "",
     "Preferowany termin:",
     formData.date ? `Dzień: ${formData.date}` : "Dzień:",
-    formData.time ? `Godzina / zakres godzin: ${formData.time}` : "Godzina / zakres godzin:",
+    formData.time ? `Godzina: ${formData.time}` : "Godzina:",
     "",
     "Wiadomość dodatkowa:",
     formData.message ? formData.message : "",
@@ -951,8 +951,23 @@ function initOfferPage() {
         </label>
 
         <label>
-          <span>Preferowana godzina / zakres godzin</span>
-          <input id="reservationTime" name="time" type="text" placeholder="Np. wtorek po 16:00 albo sobota rano">
+          <span>Preferowana godzina</span>
+          <select id="reservationTime" name="time">
+            <option value="">Wybierz godzinę</option>
+            <option value="08:00">08:00</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+            <option value="18:00">18:00</option>
+            <option value="19:00">19:00</option>
+            <option value="20:00">20:00</option>
+          </select>
         </label>
 
         <label>
@@ -1008,7 +1023,7 @@ function initOfferPage() {
         phone: phoneInput.value.trim(),
         email: emailInput.value.trim(),
         date: dateInput.value,
-        time: timeInput.value.trim(),
+        time: timeInput.value,
         message: messageInput.value.trim()
       };
     }
