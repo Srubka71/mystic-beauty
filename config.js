@@ -118,7 +118,7 @@ const MYSTIC_CONFIG = {
           price: "2300 zł",
           duration: "5g 20min",
           effect: "kompleksowe odmłodzenie",
-          previewVideo: "assets/videos/test.mp4",
+          previewVideo: "../assets/videos/test.mp4",
           shortDescription:
             "Rozbudowany pakiet odmładzający dla osób szukających kompleksowego efektu.",
           description:
@@ -140,7 +140,7 @@ const MYSTIC_CONFIG = {
           price: "1000 zł",
           duration: "2g 10min",
           effect: "naturalne podkreślenie ust",
-          previewVideo: "assets/videos/test2.mp4",
+          previewVideo: "../assets/videos/test2.mp4",
           shortDescription:
             "Naturalne zwiększenie objętości i poprawa wyglądu ust bez klasycznego przerysowania.",
           description:
