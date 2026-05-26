@@ -2288,3 +2288,109 @@ body[data-page="offer"] #primaryButton {
     animation: none;
   }
 }
+
+/* =========================
+   GITHUB PAGES MOBILE FIX — MODAL SCROLL
+   Naprawia scrollowanie modali na telefonie po publikacji
+========================= */
+
+@media (max-width: 760px) {
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body.modal-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .modal-backdrop,
+  .area-modal-backdrop,
+  .checkout-modal-backdrop {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    padding: 10px !important;
+  }
+
+  .modal-backdrop.is-open,
+  .area-modal-backdrop.is-open,
+  .checkout-modal-backdrop.is-open {
+    touch-action: pan-y;
+  }
+
+  .service-modal {
+    width: 100% !important;
+    max-height: none !important;
+    min-height: auto !important;
+    margin: 0 auto 18px !important;
+    overflow: visible !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "media"
+      "content" !important;
+    border-radius: 24px !important;
+  }
+
+  .modal-media {
+    min-height: 220px !important;
+    max-height: 260px !important;
+  }
+
+  .modal-video-placeholder {
+    min-height: 220px !important;
+  }
+
+  .modal-content {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 30px 22px 28px !important;
+    justify-content: flex-start !important;
+  }
+
+  .modal-content h3 {
+    font-size: clamp(34px, 12vw, 54px) !important;
+  }
+
+  .modal-content p {
+    font-size: 14px !important;
+    line-height: 1.58 !important;
+  }
+
+  .modal-details {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .area-modal,
+  .checkout-modal {
+    width: 100% !important;
+    max-height: calc(100dvh - 20px) !important;
+    margin: 0 auto 18px !important;
+    overflow: hidden !important;
+  }
+
+  .area-list {
+    max-height: calc(100dvh - 300px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .checkout-list {
+    max-height: calc(100dvh - 390px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .area-cart-bar {
+    position: sticky !important;
+    bottom: 0 !important;
+  }
+
+  .checkout-actions {
+    padding-bottom: 22px !important;
+  }
+}
