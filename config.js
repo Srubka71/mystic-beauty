@@ -38,6 +38,7 @@ const MYSTIC_CONFIG = {
           price: "od 750 zł",
           duration: "od 1g 10min",
           effect: "lifting, napięcie i poprawa jakości skóry",
+          videoFileName: "zaffiro-podczerwien.mp4",
           shortDescription:
             "Podczerwień ZAFFIRO dla naturalnego odmłodzenia, napięcia i poprawy wyglądu skóry.",
           description:
@@ -90,6 +91,7 @@ const MYSTIC_CONFIG = {
           price: "1000 zł",
           duration: "1g 30min",
           effect: "lifting trudnych obszarów",
+          videoFileName: "mystic-lift.mp4",
           shortDescription:
             "Autorski zabieg liftingujący dla obszarów wymagających szczególnej pracy.",
           description:
@@ -118,6 +120,7 @@ const MYSTIC_CONFIG = {
           price: "2300 zł",
           duration: "5g 20min",
           effect: "kompleksowe odmłodzenie",
+          videoFileName: "full-pakiet-odmladzanie.mp4",
           previewVideo: "../assets/videos/test.mp4",
           shortDescription:
             "Rozbudowany pakiet odmładzający dla osób szukających kompleksowego efektu.",
@@ -140,6 +143,7 @@ const MYSTIC_CONFIG = {
           price: "1000 zł",
           duration: "2g 10min",
           effect: "naturalne podkreślenie ust",
+          videoFileName: "naturalne-powiekszanie-ust.mp4",
           previewVideo: "../assets/videos/test2.mp4",
           shortDescription:
             "Naturalne zwiększenie objętości i poprawa wyglądu ust bez klasycznego przerysowania.",
@@ -169,6 +173,7 @@ const MYSTIC_CONFIG = {
           price: "od 350 zł",
           duration: "od 1g 10min",
           effect: "wygładzenie, odświeżenie i glow",
+          videoFileName: "biorepeel.mp4",
           shortDescription:
             "Peeling medyczny dla skóry z przebarwieniami, trądzikiem lub potrzebą odświeżenia.",
           description:
@@ -203,6 +208,7 @@ const MYSTIC_CONFIG = {
           price: "650 zł",
           duration: "1g 30min",
           effect: "nawilżenie, dotlenienie i glow",
+          videoFileName: "mystic-hydro-glow.mp4",
           shortDescription:
             "Silnie nawilżający rytuał dla skóry potrzebującej odświeżenia, dotlenienia i glow.",
           description:
@@ -235,6 +241,7 @@ const MYSTIC_CONFIG = {
           price: "700 zł",
           duration: "1g 50min",
           effect: "wyciszenie i poprawa kondycji skóry",
+          videoFileName: "leczenie-tradziku.mp4",
           shortDescription:
             "Zabieg dla skóry z trądzikiem, zaczerwienieniami i stanami zapalnymi.",
           description:
@@ -263,6 +270,7 @@ const MYSTIC_CONFIG = {
           price: "od 350 zł",
           duration: "od 1g",
           effect: "oczyszczenie i dotlenienie",
+          videoFileName: "mystic-glow-peeling-wodny.mp4",
           shortDescription:
             "Oczyszczający zabieg z peelingiem wodnym, tlenem i ampułką pielęgnacyjną.",
           description:
@@ -296,6 +304,7 @@ const MYSTIC_CONFIG = {
           price: "od 800 zł",
           duration: "od 1g 30min",
           effect: "nawilżenie i poprawa jakości skóry",
+          videoFileName: "mezoterapia-neauvia.mp4",
           shortDescription:
             "Mezoterapia preparatem Neauvia Organic Hydro Deluxe dla poprawy nawilżenia i jakości skóry.",
           description:
@@ -324,6 +333,7 @@ const MYSTIC_CONFIG = {
           price: "650 zł",
           duration: "1g 10min",
           effect: "nawilżenie i stymulacja",
+          videoFileName: "nawilzanie-stymulacja-ust.mp4",
           shortDescription:
             "Zabieg poprawiający nawilżenie, komfort i wygląd ust w naturalnym kierunku.",
           description:
@@ -345,6 +355,7 @@ const MYSTIC_CONFIG = {
           price: "od 700 zł",
           duration: "1g 10min",
           effect: "zagęszczanie i regeneracja",
+          videoFileName: "terapia-peptydowa-skory-glowy.mp4",
           shortDescription:
             "Terapia peptydowa skóry głowy, dostępna również jako seria zabiegów.",
           description:
@@ -369,6 +380,7 @@ const MYSTIC_CONFIG = {
           price: "od 600 zł",
           duration: "1g",
           effect: "zagęszczenie i odbudowa",
+          videoFileName: "odbudowa-brwi.mp4",
           shortDescription:
             "Zabieg wspierający naturalną odbudowę i zagęszczanie brwi.",
           description:
@@ -393,6 +405,7 @@ const MYSTIC_CONFIG = {
           price: "900 zł",
           duration: "1g 15min",
           effect: "regeneracja i poprawa jakości skóry",
+          videoFileName: "mezoterapia-nad-complex.mp4",
           shortDescription:
             "Zaawansowana mezoterapia NAD + Complex ukierunkowana na regenerację skóry.",
           description:
@@ -421,6 +434,7 @@ const MYSTIC_CONFIG = {
           price: "650 zł",
           duration: "1g 15min",
           effect: "odbudowa i regeneracja",
+          videoFileName: "regeneracja-paznokci-podczerwien.mp4",
           shortDescription:
             "Zabieg regeneracji i odbudowy płytki paznokci metodą podczerwieni.",
           description:
@@ -449,6 +463,7 @@ const MYSTIC_CONFIG = {
           price: "od 300 zł",
           duration: "od 1g 30min",
           effect: "dobór zabiegu na miejscu",
+          videoFileName: "pierwsza-wizyta.mp4",
           shortDescription:
             "Opcja dla osób, które nie wiedzą, jaki zabieg wybrać i chcą zacząć od konsultacji.",
           description:
@@ -480,6 +495,7 @@ const MYSTIC_CONFIG = {
           price: "od 400 zł",
           duration: "od 50min",
           effect: "modelowanie sylwetki",
+          videoFileName: "lipoliza-cincelar.mp4",
           shortDescription:
             "Zabiegi na ciało ukierunkowane na redukcję tkanki tłuszczowej i modelowanie sylwetki.",
           description:
@@ -513,6 +529,7 @@ const MYSTIC_CONFIG = {
           price: "Darmowa",
           duration: "20min",
           effect: "dobór zabiegu",
+          videoFileName: "konsultacja-przed-zabiegiem.mp4",
           shortDescription:
             "Krótka konsultacja przed zabiegiem, która pomaga dobrać właściwy kierunek działania.",
           description:
@@ -534,6 +551,7 @@ const MYSTIC_CONFIG = {
           price: "350 zł",
           duration: "1g",
           effect: "indywidualny plan",
+          videoFileName: "konsultacja-kosmetologiczna-plan.mp4",
           shortDescription:
             "Rozbudowana konsultacja z planem pielęgnacyjno-zabiegowym dobranym do potrzeb skóry.",
           description:
@@ -562,6 +580,7 @@ const MYSTIC_CONFIG = {
           price: "350 zł+",
           duration: "1g",
           effect: "poprawa wyglądu skóry",
+          videoFileName: "redukcja-blizn-rozstepow.mp4",
           shortDescription:
             "Terapia ukierunkowana na poprawę wyglądu blizn, rozstępów i jakości skóry.",
           description:
