@@ -2586,3 +2586,110 @@ body[data-page="offer"] #primaryButton {
     padding-bottom: 20px !important;
   }
 }
+
+/* =========================
+   ETAP FORM FIX 2 — CHECKOUT SPACE + TIME SELECT
+   - więcej miejsca na listę wybranych zabiegów
+   - godziny jako lista select co 1h
+========================= */
+
+.checkout-form-preview select {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 13px;
+  color: var(--text);
+  border: 1px solid rgba(123, 81, 70, 0.14);
+  border-radius: 18px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.58);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.checkout-form-preview select:focus {
+  border-color: rgba(123, 81, 70, 0.32);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 22px rgba(75, 52, 43, 0.08);
+}
+
+/* Desktop/laptop — więcej miejsca na listę usług */
+@media (min-width: 761px) {
+  .checkout-modal {
+    width: min(820px, calc(100vw - 36px)) !important;
+  }
+
+  .checkout-list {
+    max-height: 230px !important;
+  }
+
+  .checkout-form-preview {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .checkout-form-preview label:has(textarea),
+  .checkout-terms {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* Niższy laptop — nadal pokazujemy przyciski bez oddalania */
+@media (min-width: 761px) and (max-height: 820px) {
+  .checkout-modal {
+    width: min(860px, calc(100vw - 24px)) !important;
+    max-height: calc(100svh - 18px) !important;
+    grid-template-rows: auto minmax(140px, 1fr) auto auto auto !important;
+  }
+
+  .checkout-list {
+    max-height: 220px !important;
+    overflow-y: auto !important;
+  }
+
+  .checkout-form-preview {
+    padding: 0 16px 10px !important;
+    gap: 7px !important;
+  }
+
+  .checkout-form-preview input[type="text"],
+  .checkout-form-preview input[type="tel"],
+  .checkout-form-preview input[type="email"],
+  .checkout-form-preview input[type="date"],
+  .checkout-form-preview select {
+    min-height: 32px !important;
+    padding: 6px 11px !important;
+    font-size: 12px !important;
+  }
+
+  .checkout-form-preview textarea {
+    min-height: 52px !important;
+    padding: 8px 11px !important;
+    font-size: 12px !important;
+  }
+
+  .checkout-actions {
+    padding: 9px 16px 10px !important;
+  }
+
+  .checkout-note {
+    padding: 0 16px 10px !important;
+  }
+}
+
+/* Mobile — select bez zoomowania i wygodny scroll */
+@media (max-width: 760px) {
+  .checkout-form-preview select {
+    min-height: 42px !important;
+    font-size: 16px !important;
+    border-radius: 18px;
+  }
+
+  .checkout-list {
+    max-height: 260px !important;
+  }
+
+  .checkout-modal {
+    max-height: calc(100dvh - 16px) !important;
+  }
+}
