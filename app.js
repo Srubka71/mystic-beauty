@@ -937,7 +937,7 @@ function initOfferPage() {
 
         <label>
           <span>Telefon *</span>
-          <input id="reservationPhone" name="phone" type="tel" placeholder="Np. 500 000 000" autocomplete="tel" required>
+          <input id="reservationPhone" name="phone" type="tel" placeholder="Np. 500000000" autocomplete="tel" required>
         </label>
 
         <label>
@@ -984,8 +984,7 @@ function initOfferPage() {
       </div>
 
       <p class="checkout-note" id="checkoutNote">
-        To jest etap testowy. Formularz przygotowuje wiadomość e-mail z wybranymi zabiegami i danymi kontaktowymi.
-        W kolejnym etapie podepniemy Formspree.
+        Uzupełnij imię i nazwisko, telefon, e-mail oraz zaakceptuj regulamin, żeby przygotować prośbę o rezerwację.
       </p>
     `;
 
@@ -1017,11 +1016,31 @@ function initOfferPage() {
     function validateReservationForm() {
       const formData = getReservationFormData();
 
+      const phoneIsValid = /^[0-9]{6,15}$/.test(formData.phone);
+      const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(formData.email);
+
+      nameInput.classList.toggle("is-valid", formData.name.length >= 2);
+      nameInput.classList.toggle(
+        "is-invalid",
+        formData.name.length > 0 && formData.name.length < 2
+      );
+
+      phoneInput.classList.toggle("is-valid", phoneIsValid);
+      phoneInput.classList.toggle(
+        "is-invalid",
+        formData.phone.length > 0 && !phoneIsValid
+      );
+
+      emailInput.classList.toggle("is-valid", emailIsValid);
+      emailInput.classList.toggle(
+        "is-invalid",
+        formData.email.length > 0 && !emailIsValid
+      );
+
       const isValid =
         formData.name.length >= 2 &&
-        formData.phone.length >= 6 &&
-        emailInput.validity.valid &&
-        formData.email.length >= 5 &&
+        phoneIsValid &&
+        emailIsValid &&
         termsCheckbox.checked;
 
       if (isValid) {
@@ -1035,9 +1054,20 @@ function initOfferPage() {
         checkoutMailButton.setAttribute("aria-disabled", "true");
         checkoutMailButton.href = "#";
         checkoutNote.textContent =
-          "Uzupełnij imię i nazwisko, telefon, e-mail oraz zaakceptuj regulamin, żeby przygotować prośbę o rezerwację.";
+          "Uzupełnij imię i nazwisko, telefon, poprawny e-mail oraz zaakceptuj regulamin, żeby przygotować prośbę o rezerwację.";
       }
     }
+
+    phoneInput.setAttribute("inputmode", "numeric");
+    phoneInput.setAttribute("pattern", "[0-9]*");
+    phoneInput.setAttribute("maxlength", "15");
+
+    phoneInput.addEventListener("input", () => {
+      phoneInput.value = phoneInput.value.replace(/\D/g, "").slice(0, 15);
+      validateReservationForm();
+    });
+
+    emailInput.setAttribute("inputmode", "email");
 
     reservationForm.addEventListener("input", validateReservationForm);
     reservationForm.addEventListener("change", validateReservationForm);
@@ -1049,7 +1079,7 @@ function initOfferPage() {
         event.preventDefault();
 
         checkoutNote.textContent =
-          "Brakuje wymaganych danych. Uzupełnij imię i nazwisko, telefon, e-mail oraz zaznacz akceptację regulaminu.";
+          "Brakuje wymaganych danych. Uzupełnij imię i nazwisko, telefon, poprawny e-mail oraz zaznacz akceptację regulaminu.";
       }
     });
 
