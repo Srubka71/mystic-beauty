@@ -216,6 +216,31 @@ function initOfferPage() {
   let transitionLocked = false;
   let floatingCartButton = null;
 
+  function isMobileView() {
+    return window.matchMedia("(max-width: 760px)").matches;
+  }
+
+  function scrollOfferPreviewIntoView(delay = 120) {
+    if (!isMobileView()) return;
+
+    window.setTimeout(() => {
+      const offerHero = document.querySelector(".offer-hero");
+
+      if (offerHero && typeof offerHero.scrollIntoView === "function") {
+        offerHero.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+        return;
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }, delay);
+  }
+
   function ensureHeroPreview() {
     let preview = document.getElementById("heroServicePreview");
 
@@ -406,6 +431,11 @@ function initOfferPage() {
     const moreButton = card.querySelector(".service-more-button");
 
     mainButton.addEventListener("click", () => {
+      if (activeServiceId === service.id) {
+        scrollOfferPreviewIntoView(60);
+        return;
+      }
+
       setActiveService(service.id);
     });
 
@@ -485,7 +515,12 @@ function initOfferPage() {
   }
 
   function setActiveService(serviceId) {
-    if (transitionLocked || activeServiceId === serviceId) return;
+    if (transitionLocked) return;
+
+    if (activeServiceId === serviceId) {
+      scrollOfferPreviewIntoView(60);
+      return;
+    }
 
     const service = getServiceById(serviceId);
     if (!service) return;
@@ -513,6 +548,7 @@ function initOfferPage() {
 
       renderMeta([service.price, service.duration, service.effect]);
       updateHeroPreview(service);
+      scrollOfferPreviewIntoView(80);
 
       heroContent.classList.remove("is-changing");
       heroContent.classList.add("is-visible");
